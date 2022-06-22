@@ -6,6 +6,8 @@
  * While it could be used where performance is not critical, I would recommend using the ‘Web Cryptography API’ (developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest) for the browser, or the ‘crypto’ library (nodejs.org/api/crypto.html#crypto_class_hash) in Node.js.
  */
 
+import { hexBytesToString, utf8Encode } from "./utils";
+
 export default class SHA256 {
   static hash(
     msg: string,
@@ -161,36 +163,6 @@ export default class SHA256 {
     const separator = options.outFormat == "hex-w" ? " " : "";
 
     return initial_hash_values.join(separator);
-
-    /**
-     * **************************************************************************************************
-     * **************************************************************************************************
-     * **************************************************************************************************
-     */
-
-    function utf8Encode(msg: string): string {
-      try {
-        return new TextEncoder()
-          .encode(msg)
-          .reduce(
-            (previous, current) => previous + String.fromCharCode(current),
-            ""
-          );
-      } catch (error) {
-        // no TextEncoder available?
-        return decodeURIComponent(encodeURIComponent(msg)); // monsur.hossa.in/2012/07/20/utf-8-in-javascript.html
-      }
-    }
-
-    function hexBytesToString(hexmsg: string): string {
-      // convert string of hex numbers to a string of chars (eg '616263' -> 'abc').
-      const str = hexmsg.replace(" ", ""); // allow space-separated groups
-      return str === ""
-        ? ""
-        : (str.match(/.{2}/g) as RegExpMatchArray)
-            .map((byte) => String.fromCharCode(parseInt(byte, 16)))
-            .join("");
-    }
   }
 
   // Rotates right (circular right shift) value x by n positions [§3.2.4].
