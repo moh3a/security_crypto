@@ -6,7 +6,7 @@
  * While it could be used where performance is not critical, I would recommend using the ‘Web Cryptography API’ (developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest) for the browser, or the ‘crypto’ library (nodejs.org/api/crypto.html#crypto_class_hash) in Node.js.
  */
 
-import { hexBytesToString, utf8Encode } from "./utils";
+import { hexBytesToString, utf8Encode } from "../utils";
 
 export default class SHA256 {
   static hash(
